@@ -4,6 +4,7 @@ export default async function Chatgpt(ctx) {
   try {
     const userMessage = ctx.message.text;
 
+    await ctx.replyWithChatAction('typing');
     if (userMessage.startsWith("/")) return;
 
     await ctx.reply("⏳");

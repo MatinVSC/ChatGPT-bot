@@ -7,11 +7,23 @@ import { MySQL } from "@telegraf/session/mysql";
 import Command from "./middleware/command.js";
 import Action from "./middleware/action.js";
 // import Chatgpt from "./middleware/chatgpt.js";
+// limiter
+import { limit } from "@grammyjs/ratelimiter";
 
 
 const bot = new Telegraf(process.env.TOKEN);
 
 const Startbot = () => {
+
+    bot.use(
+        limit({
+            timeFrame: 1000,
+            limit: 1,
+            onLimitExceeded: async (ctx) => {
+                await ctx.reply("اسپم نکن بچه !!");
+            },
+        })
+    );
 
     const i18n = new TelegrafI18n({
         directory: "locales",
